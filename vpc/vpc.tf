@@ -17,3 +17,12 @@ resource "aws_subnet" "bridee_public_subnet"{
     Name = "bridee_public_subnet"
   }
 }
+
+resource "aws_internet_gateway" "bridee_internet_gateway" {
+  vpc_id = aws_vpc.bridee_vpc.id
+
+  tags = {
+   IAC = true
+   Name = "bridee_internet_gateway" 
+  }
+}
