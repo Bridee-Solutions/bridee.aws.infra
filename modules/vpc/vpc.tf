@@ -11,11 +11,45 @@ resource "aws_vpc" "bridee_vpc"{
 resource "aws_subnet" "bridee_public_subnet"{
   vpc_id = aws_vpc.bridee_vpc.id
   cidr_block = "10.0.0.0/24"
+  map_public_ip_on_launch = "true"
 
   tags = {
     IAC = true
     Name = "bridee_public_subnet"
   }
+}
+
+resource "aws_network_acl" "bridee_public_nacl"{
+  vpc_id = aws_vpc.bridee_vpc.id
+  subnet_ids = [aws_subnet.bridee_public_subnet.id]
+
+  ingress{
+    protocol = "-1"
+    rule_no = 100
+    action = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port = 0
+    to_port = 0
+  }
+
+  egress{
+    protocol = "-1"
+    rule_no = 100
+    action = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 0
+    to_port    = 0
+  }
+
+  tags = {
+    name = "bridee_public_nacl"
+    IAC = true
+  }
+}
+
+resource "aws_network_acl_association" "bridee_public_nacl_association"{
+  network_acl_id = aws_network_acl.bridee_public_nacl.id
+  subnet_id = aws_subnet.bridee_public_subnet.id
 }
 
 resource "aws_subnet" "bridee_private_subnet"{
