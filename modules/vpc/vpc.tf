@@ -82,6 +82,39 @@ resource "aws_subnet" "bridee_private_subnet"{
   }
 }
 
+resource "aws_network_acl" "bridee_private_nacl"{
+  vpc_id = aws_vpc.bridee_vpc.id
+  subnet_ids = [aws_subnet.bridee_private_subnet.id]
+
+  ingress{
+    protocol = "-1"
+    rule_no = 100
+    action = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port = 0
+    to_port = 0
+  }
+
+  egress{
+    protocol = "-1"
+    rule_no = 100
+    action = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 0
+    to_port    = 0
+  }
+
+  tags = {
+    Name = "bridee_private_nacl"
+    IAC = true
+  }
+}
+
+resource "aws_network_acl_association" "bridee_private_nacl_association"{
+  network_acl_id = aws_network_acl.bridee_private_nacl.id
+  subnet_id = aws_subnet.bridee_private_subnet.id
+}
+
 resource "aws_internet_gateway" "bridee_internet_gateway" {
   vpc_id = aws_vpc.bridee_vpc.id
 
