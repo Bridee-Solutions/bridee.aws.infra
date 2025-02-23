@@ -66,6 +66,11 @@ resource "aws_route_table" "bridee_public_route_table"{
   }
 }
 
+resource "aws_route_table_association" "bridee_route_table_association"{
+  subnet_id = aws_subnet.bridee_public_subnet.id
+  route_table_id = aws_route_table.bridee_public_route_table.id
+}
+
 resource "aws_subnet" "bridee_private_subnet"{
   vpc_id = aws_vpc.bridee_vpc.id
   cidr_block = "10.0.1.0/28"
