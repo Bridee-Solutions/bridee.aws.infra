@@ -42,7 +42,7 @@ resource "aws_network_acl" "bridee_public_nacl"{
   }
 
   tags = {
-    name = "bridee_public_nacl"
+    Name = "bridee_public_nacl"
     IAC = true
   }
 }
@@ -50,6 +50,20 @@ resource "aws_network_acl" "bridee_public_nacl"{
 resource "aws_network_acl_association" "bridee_public_nacl_association"{
   network_acl_id = aws_network_acl.bridee_public_nacl.id
   subnet_id = aws_subnet.bridee_public_subnet.id
+}
+
+resource "aws_route_table" "bridee_public_route_table"{
+  vpc_id = aws_vpc.bridee_vpc.id
+
+  route{
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.bridee_internet_gateway.id
+  }
+
+  tags = {
+    Name = "bridee_public_route_table"
+    IAC = true
+  }
 }
 
 resource "aws_subnet" "bridee_private_subnet"{
