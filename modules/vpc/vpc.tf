@@ -115,6 +115,25 @@ resource "aws_network_acl_association" "bridee_private_nacl_association"{
   subnet_id = aws_subnet.bridee_private_subnet.id
 }
 
+resource "aws_route_table" "bridee_private_route_table"{
+  vpc_id = aws_vpc.bridee_vpc.id
+
+  route{
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.bridee_internet_gateway.id
+  }
+
+  tags = {
+    Name = "bridee_private_route_table"
+    IAC = true
+  }
+}
+
+resource "aws_route_table_association" "bridee_private_route_table_association"{
+  subnet_id = aws_subnet.bridee_private_subnet.id
+  route_table_id = aws_route_table.bridee_private_route_table.id
+}
+
 resource "aws_internet_gateway" "bridee_internet_gateway" {
   vpc_id = aws_vpc.bridee_vpc.id
 
