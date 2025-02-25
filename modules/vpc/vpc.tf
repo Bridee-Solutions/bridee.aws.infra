@@ -12,6 +12,7 @@ resource "aws_subnet" "bridee_public_subnet"{
   vpc_id = aws_vpc.bridee_vpc.id
   cidr_block = "10.0.0.0/24"
   map_public_ip_on_launch = "true"
+  availability_zone = "us-east-1a"
 
   tags = {
     IAC = true
@@ -75,6 +76,7 @@ resource "aws_subnet" "bridee_private_subnet"{
   vpc_id = aws_vpc.bridee_vpc.id
   cidr_block = "10.0.1.0/28"
   map_public_ip_on_launch = "false"
+  availability_zone = "us-east-1b"
 
   tags = {
     IAC = true
