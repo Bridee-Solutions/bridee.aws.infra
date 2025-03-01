@@ -9,3 +9,10 @@ output "public_subnet_id" {
   description = "public subnet id"
   sensitive = false
 }
+
+output "vpc_id" {
+  value       = aws_vpc.bridee_vpc.id
+  sensitive   = false
+  description = "vpc id"
+  depends_on  = []
+}
