@@ -117,12 +117,26 @@ resource "aws_network_acl_association" "bridee_private_nacl_association"{
   subnet_id = aws_subnet.bridee_private_subnet.id
 }
 
+resource "aws_eip" "bridee_elastic_ip_nat"{
+  domain = "vpc"
+}
+
+resource "aws_nat_gateway" "bridee_nat_gateway"{
+  subnet_id = aws_subnet.bridee_public_subnet
+  connectivity_type = "public"
+  allocation_id = aws_eip.bridee_elastic_ip_nat.id
+
+  tags = {
+    IAC = true
+  }
+}
+
 resource "aws_route_table" "bridee_private_route_table"{
   vpc_id = aws_vpc.bridee_vpc.id
 
   route{
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.bridee_internet_gateway.id
+    gateway_id = aws_nat_gateway.bridee_nat_gateway.id
   }
 
   tags = {
