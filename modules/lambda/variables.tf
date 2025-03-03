@@ -15,3 +15,9 @@ variable wedding_job_image_uri {
   default     = ""
   description = "Uri da imagem do job na ECR"
 }
+
+variable upload_function_image_uri {
+  type        = string
+  default     = ""
+  description = "Uri da imagem da função de upload"
+}
