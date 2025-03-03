@@ -30,8 +30,4 @@ resource "aws_s3_bucket_website_configuration" "bridee_website"{
   error_document{
     key = "index.html"
   }
-
-  tags = {
-    IAC = true
-  }
 }
