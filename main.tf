@@ -23,37 +23,37 @@ module "ec2"{
   ]
 }
 
-module "lambda_functions"{
-  source = "./modules/lambda"
+# module "lambda_functions"{
+#   source = "./modules/lambda"
 
-  private_security_group_id = module.ec2.private_security_group_id
-  private_subnet_id = module.network.private_subnet_id
-  wedding_job_image_uri = var.wedding_job_image_uri
-  upload_function_image_uri = var.upload_function_image_uri
+#   private_security_group_id = module.ec2.private_security_group_id
+#   private_subnet_id = module.network.private_subnet_id
+#   wedding_job_image_uri = var.wedding_job_image_uri
+#   upload_function_image_uri = var.upload_function_image_uri
 
-  depends_on = [
-    module.network,
-    module.ec2
-  ]
-}
+#   depends_on = [
+#     module.network,
+#     module.ec2
+#   ]
+# }
 
 module "s3"{
   source = "./modules/s3"
 }
 
-module "cloudfront"{
-  source = "./modules/cloudfront"
+# module "cloudfront"{
+#   source = "./modules/cloudfront"
 
-  bucket_domain_name = module.s3.website_bucket_domain_name
-  origin_id = module.s3.website_bucket_id
+#   bucket_domain_name = module.s3.website_bucket_domain_name
+#   origin_id = module.s3.website_bucket_id
 
-  cdn_price_class    = "PriceClass_200"
-  cdn_tags = {
-    Iac = true
-  }
+#   cdn_price_class    = "PriceClass_200"
+#   cdn_tags = {
+#     Iac = true
+#   }
 
-  depends_on = [
-    module.s3
-  ]
+#   depends_on = [
+#     module.s3
+#   ]
 
-}
+# }
