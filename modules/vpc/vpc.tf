@@ -122,7 +122,7 @@ resource "aws_eip" "bridee_elastic_ip_nat"{
 }
 
 resource "aws_nat_gateway" "bridee_nat_gateway"{
-  subnet_id = aws_subnet.bridee_public_subnet
+  subnet_id = aws_subnet.bridee_public_subnet.id
   connectivity_type = "public"
   allocation_id = aws_eip.bridee_elastic_ip_nat.id
 
