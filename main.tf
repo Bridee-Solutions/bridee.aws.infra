@@ -12,6 +12,10 @@ module "rds" {
   ]
 }
 
+module "key"{
+  source = "./modules/keypair"
+}
+
 module "ec2"{
   source = "./modules/ec2"
   private_subnet_id = module.network.private_subnet_id
@@ -21,6 +25,10 @@ module "ec2"{
   depends_on = [
     module.network
   ]
+}
+
+module "s3"{
+  source = "./modules/s3"
 }
 
 # module "lambda_functions"{
@@ -36,10 +44,6 @@ module "ec2"{
 #     module.ec2
 #   ]
 # }
-
-module "s3"{
-  source = "./modules/s3"
-}
 
 # module "cloudfront"{
 #   source = "./modules/cloudfront"
