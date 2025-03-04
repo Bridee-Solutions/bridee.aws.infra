@@ -21,6 +21,7 @@ module "ec2"{
   private_subnet_id = module.network.private_subnet_id
   public_subnet_id = module.network.public_subnet_id
   vpc_id = module.network.vpc_id
+  key_pair_name = module.key.key_pair_name
 
   depends_on = [
     module.network

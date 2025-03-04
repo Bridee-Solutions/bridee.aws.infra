@@ -25,7 +25,7 @@ resource "aws_instance" "api_gateway_instance"{
     ami = "ami-007855ac798b5175e"
     instance_type = "t2.micro"
     availability_zone = "us-east-1a"
-    key_name = ""
+    key_name = var.key_pair_name
     tenancy = "default"
     subnet_id = var.public_subnet_id
     security_groups = ["${aws_security_group.bridee_public_security_group.id}"]
@@ -62,7 +62,6 @@ resource "aws_instance" "application_instance"{
     ami = "ami-007855ac798b5175e"
     instance_type = "t2.micro"
     availability_zone = "us-east-1b"
-    key_name = ""
     tenancy = "default"
     subnet_id = var.private_subnet_id
     security_groups = ["${aws_security_group.bridee_public_security_group.id}"]
