@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "s3_user" {
-  bucket = "bridee_user_bucket"
+  bucket = "bridee-user-bucket"
 
   # lifecycle{
   #   prevent_destroy = true
@@ -12,10 +12,10 @@ resource "aws_s3_bucket" "s3_user" {
 }
 
 resource "aws_s3_bucket" "s3_website" {
-  bucket = "bridee_ui"
+  bucket = "bridee-ui-bucket"
 
   tags = {
-    Name = "bridee_ui",
+    Name = "bridee-ui-bucket",
     IAC = true
   }
 }

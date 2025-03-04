@@ -1,6 +1,6 @@
 resource "aws_security_group" "bridee_public_security_group"{
     vpc_id = var.vpc_id
-    description = "Grupo de segurança para os recursos da rede pública"
+    description = "Grupo de seguranca para os recursos da rede publica"
 
     ingress{
         from_port = 22
@@ -37,7 +37,7 @@ resource "aws_instance" "api_gateway_instance"{
 
 resource "aws_security_group" "bridee_private_security_group"{
     vpc_id = var.vpc_id
-    description = "Grupo de segurança para os recursos da rede privada"
+    description = "Grupo de seguranca para os recursos da rede privada"
 
     ingress{
         from_port = 22
@@ -61,7 +61,7 @@ resource "aws_security_group" "bridee_private_security_group"{
 resource "aws_instance" "application_instance"{
     ami = "ami-007855ac798b5175e"
     instance_type = "t2.micro"
-    availability_zone = "us-east-1a"
+    availability_zone = "us-east-1b"
     key_name = ""
     tenancy = "default"
     subnet_id = var.private_subnet_id
