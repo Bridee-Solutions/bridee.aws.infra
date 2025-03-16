@@ -1,5 +1,5 @@
 resource "aws_vpc" "bridee_vpc"{
-  cidr_block = "10.0.0.0/16"
+  cidr_block = "10.0.0.0/24"
   enable_dns_hostnames = true
 
   tags = {
@@ -10,7 +10,7 @@ resource "aws_vpc" "bridee_vpc"{
 
 resource "aws_subnet" "bridee_public_subnet"{
   vpc_id = aws_vpc.bridee_vpc.id
-  cidr_block = "10.0.0.0/24"
+  cidr_block = "10.0.0.0/25"
   map_public_ip_on_launch = "true"
   availability_zone = "us-east-1a"
 
@@ -74,7 +74,7 @@ resource "aws_route_table_association" "bridee_route_table_association"{
 
 resource "aws_subnet" "bridee_private_subnet"{
   vpc_id = aws_vpc.bridee_vpc.id
-  cidr_block = "10.0.1.0/28"
+  cidr_block = "10.0.0.128/25"
   map_public_ip_on_launch = "false"
   availability_zone = "us-east-1b"
 
@@ -88,14 +88,17 @@ resource "aws_network_acl" "bridee_private_nacl"{
   vpc_id = aws_vpc.bridee_vpc.id
   subnet_ids = [aws_subnet.bridee_private_subnet.id]
 
-  ingress{
-    protocol = "-1"
-    rule_no = 100
-    action = "allow"
-    cidr_block = aws_subnet.bridee_public_subnet.cidr_block
-    from_port = 0
-    to_port = 0
-  }
+  dynamic ingress{
+        for_each = var.private_nacl_ingress_rules
+        content{
+            from_port = ingress.value.from_port
+            to_port = ingress.value.to_port
+            protocol = ingress.value.protocol
+            action = ingress.value.action
+            rule_no = ingress.value.rule_no
+            cidr_block = ingress.value.cidr_block == null ? aws_subnet.bridee_public_subnet.cidr_block : ingress.value.cidr_block
+        }
+    }
 
   egress{
     protocol = "-1"
