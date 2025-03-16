@@ -14,5 +14,11 @@ output "vpc_id" {
   value       = aws_vpc.bridee_vpc.id
   sensitive   = false
   description = "vpc id"
-  depends_on  = []
+}
+
+
+output "public_subnet_cidr_block"{
+  value       = aws_subnet.bridee_public_subnet.cidr_block
+  sensitive   = false
+  description = "Public Subnet cidr_block"
 }
