@@ -7,7 +7,7 @@ on:
 
 jobs:
   validate-terraform:
-    uses: ./ci.yml
+    uses: ./.github/workflows/ci.yml
 
   deploy-config:
     runs-on: ubuntu-latest
