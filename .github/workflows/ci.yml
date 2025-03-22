@@ -9,10 +9,10 @@ on:
       - feat/ci-cd-pipeline
 
 env: 
-  access_key: ${{secrets.AWS_ACCESS_KEY}}
-  secret_key: ${{secrets.AWS_SECRET_KEY}}
-  session_token: ${{secrets.AWS_SESSION_TOKEN}}
-  region: ${{secrets.AWS_REGION}}
+  access_key: ${{vars.AWS_ACCESS_KEY}}
+  secret_key: ${{vars.AWS_SECRET_KEY}}
+  session_token: ${{vars.AWS_SESSION_TOKEN}}
+  region: ${{vars.AWS_REGION}}
 
 jobs:
   validate-terraform:
@@ -20,6 +20,14 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
+
+    - name: Set up AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ env.access_key }}
+        aws-secret-access-key: ${{ env.secret_key }}
+        aws-session-token: ${{ env.session_token }}
+        aws-region: ${{ env.region }}
     
     - name: Set up terraform
       uses: hashicorp/setup-terraform@v1
