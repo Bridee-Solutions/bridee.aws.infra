@@ -8,6 +8,12 @@ on:
     branches:
       - feat/ci-cd-pipeline
 
+env: 
+  access_key: ${{secrets.AWS_ACCESS_KEY}}
+  secret_key: ${{secrets.AWS_SECRET_KEY}}
+  session_token: ${{secrets.AWS_SESSION_TOKEN}}
+  region: ${{secrets.AWS_REGION}}
+
 jobs:
   validate-terraform:
     runs-on: ubuntu-latest
@@ -19,13 +25,6 @@ jobs:
       uses: hashicorp/setup-terraform@v1
       with:
         terraform_version: 1.10.3
-
-    - name: Declaring environment variables
-      run: |
-        access_key=${{secrets.AWS_ACCESS_KEY}}
-        secret_key=${{secrets.AWS_SECRET_KEY}}
-        session_token=${{secrets.AWS_SESSION_TOKEN}}
-        region=${{secrets.AWS_REGION}}
       
     - name: Terraform init
       run: terraform init
