@@ -8,12 +8,6 @@ on:
     branches:
       - feat/ci-cd-pipeline
 
-env: 
-  access_key: ${{vars.AWS_ACCESS_KEY}}
-  secret_key: ${{vars.AWS_SECRET_KEY}}
-  session_token: ${{vars.AWS_SESSION_TOKEN}}
-  region: ${{vars.AWS_REGION}}
-
 jobs:
   validate-terraform:
     runs-on: ubuntu-latest
@@ -24,10 +18,10 @@ jobs:
     - name: Set up AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        aws-access-key-id: ${{ env.access_key }}
-        aws-secret-access-key: ${{ env.secret_key }}
-        aws-session-token: ${{ env.session_token }}
-        aws-region: ${{ env.region }}
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+        aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+        aws-region: ${{ secrets.AWS_REGION }}
     
     - name: Set up terraform
       uses: hashicorp/setup-terraform@v1
