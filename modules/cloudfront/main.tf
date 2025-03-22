@@ -1,14 +1,14 @@
-resource "aws_cloudfront_distribution" "cloudfront"{
-    enabled = true
+resource "aws_cloudfront_distribution" "cloudfront" {
+  enabled = true
 
-    origin {
-        origin_id   = var.origin_id
-        domain_name = var.bucket_domain_name
-        custom_origin_config {
-        http_port              = 80
-        https_port             = 443
-        origin_protocol_policy = "http-only"
-        origin_ssl_protocols   = ["TLSv1"]
+  origin {
+    origin_id   = var.origin_id
+    domain_name = var.bucket_domain_name
+    custom_origin_config {
+      http_port              = 80
+      https_port             = 443
+      origin_protocol_policy = "http-only"
+      origin_ssl_protocols   = ["TLSv1"]
     }
   }
   default_cache_behavior {
@@ -36,5 +36,5 @@ resource "aws_cloudfront_distribution" "cloudfront"{
   }
 
   price_class = var.cdn_price_class
-  tags = var.cdn_tags
+  tags        = var.cdn_tags
 }

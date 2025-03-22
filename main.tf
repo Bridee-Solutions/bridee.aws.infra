@@ -12,24 +12,24 @@ module "network" {
 #   ]
 # }
 
-module "key"{
+module "key" {
   source = "./modules/keypair"
 }
 
-module "ec2"{
-  source = "./modules/ec2"
-  private_subnet_id = module.network.private_subnet_id
-  public_subnet_id = module.network.public_subnet_id
+module "ec2" {
+  source                   = "./modules/ec2"
+  private_subnet_id        = module.network.private_subnet_id
+  public_subnet_id         = module.network.public_subnet_id
   public_subnet_cidr_block = module.network.public_subnet_cidr_block
-  vpc_id = module.network.vpc_id
-  key_pair_name = module.key.key_pair_name
+  vpc_id                   = module.network.vpc_id
+  key_pair_name            = module.key.key_pair_name
 
   depends_on = [
     module.network
   ]
 }
 
-module "s3"{
+module "s3" {
   source = "./modules/s3"
 }
 

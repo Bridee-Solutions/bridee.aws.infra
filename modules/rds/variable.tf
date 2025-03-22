@@ -1,22 +1,22 @@
 variable "db_username" {
-  default = "bridee"
+  default     = "bridee"
   description = "Database main user"
-  type = string
+  type        = string
 }
 
 variable "db_password" {
-  default = "bridee1234"
+  default     = "bridee1234"
   description = "Database main password"
-  type = string
+  type        = string
 }
 
 variable "private_subnet_id" {
-  default = ""
+  default     = ""
   description = "private subnet id"
-  type = string
+  type        = string
 }
 
 variable "public_subnet_id" {
-  default = ""
+  default     = ""
   description = "public subnet id"
 }
