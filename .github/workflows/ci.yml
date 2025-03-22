@@ -6,7 +6,7 @@ on:
       - main
   push:
     branches:
-      - feat/ci-cd-pipeline
+      - main
 
 jobs:
   validate-terraform:
