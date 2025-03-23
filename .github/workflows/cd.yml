@@ -1,15 +1,20 @@
 name: Terraform deployment
 
 on:
-  workflow_run:
-    workflows: ["Continuos Integration terraform workflow"]
-    types:
-      - completed
+  push:
+    branches:
+      - main
 
 jobs:
+  validate-terraform:
+    uses: ./.github/workflows/ci.yml
+    secrets: inherit
+
   deploy-config:
     runs-on: ubuntu-latest
-    if: github.event.workflow_run.event == 'push'
+    needs: 
+      - validate-terraform
+    if: success()
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
