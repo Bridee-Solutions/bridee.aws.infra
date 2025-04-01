@@ -5,6 +5,13 @@ terraform {
       version = "5.82.2"
     }
   }
+
+  # backend "s3" {
+  #   bucket  = "bridee-terraform-bucket"
+  #   region  = "us-east-1"
+  #   key     = "terraform.tfstate"
+  #   encrypt = true
+  # }
 }
 
 provider "aws" {

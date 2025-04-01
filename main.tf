@@ -2,15 +2,15 @@ module "network" {
   source = "./modules/vpc"
 }
 
-# module "rds" {
-#   source = "./modules/rds"
-#   private_subnet_id = module.network.private_subnet_id
-#   public_subnet_id = module.network.public_subnet_id
+module "rds" {
+  source = "./modules/rds"
+  private_subnet_id = module.network.private_subnet_id
+  public_subnet_id = module.network.public_subnet_id
 
-#   depends_on = [
-#     module.network
-#   ]
-# }
+  depends_on = [
+    module.network
+  ]
+}
 
 module "key" {
   source = "./modules/keypair"

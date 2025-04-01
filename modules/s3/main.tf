@@ -30,4 +30,33 @@ resource "aws_s3_bucket_website_configuration" "bridee_website" {
   error_document {
     key = "index.html"
   }
+
+  depends_on = [
+    aws_s3_bucket.s3_website
+  ]
+}
+
+resource "aws_s3_bucket" "bridee_terraform_state" {
+  bucket = "bridee-terraform-bucket"
+
+  tags = {
+    Name = "bridee-terraform-bucket",
+    IAC  = true
+  }
+}
+
+resource "aws_s3_bucket_versioning" "state_versioning" {
+  bucket = aws_s3_bucket.bridee_terraform_state.bucket
+
+  versioning_configuration {
+    status = "Enabled"
+  }
+
+  # lifecycle{
+  #   prevent_destroy = true
+  # }
+
+  depends_on = [
+    aws_s3_bucket.bridee_terraform_state
+  ]
 }
